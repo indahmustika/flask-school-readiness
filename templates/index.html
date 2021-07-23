@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>School Readiness Prediction System</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/sb-admin-2.min.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" 
+	rel="stylesheet">
+</head>
+
+<body id="page-top">
+	<div id="wrapper">
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href=""><div class="sidebar-brand-icon"><i class="fas fa-book"></i></div><div class="sidebar-brand-text mx-3">TK AR RASYID</div></a>
+			<hr class="sidebar-divider my-0">
+			<li class="nav-item"><a class="nav-link" href=""><i class="fas fa-fw fa-chart-area"></i><span>Input Data</span></a></li>
+			<li class="nav-item"><a class="nav-link" href=""><i class="fas fa-fw fa-table"></i><span>History Data</span></a></li>
+			<hr class="sidebar-divider d-none d-md-block">
+			<div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+		</ul>
+
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+					<h1 class="h4 mb-0 text-gray-800">School Readiness Prediction </h1>
+				</nav>
+
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xl-7 col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h5 class="m-0 text-primary">Data Diri Peserta Didik</h5>
+								</div>
+								<div class="card-body">
+									<form action="{{url_for('predict')}}" method="POST">
+										<div class="table-responsive">
+											<table class="table table-sm table-borderless" width="100%" cellspacing="0">
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Nama</label></td>
+														<td width="70%"><input class="form-control" type="text" name="name" placeholder="Nama" autocomplete="off"></td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Kelas</label></td>
+														<td width="70%">
+															<select class="form-control" name="preschool">
+																<option value="" selected disabled hidden>Kelas</option>
+																<option value="0">TK-A</option>
+																<option value="1">TK-B</option>
+															</select>
+														</td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Jenis Kelamin</label></td>
+														<td width="70%">
+															<select class="form-control" name="gender">
+																<option value="" selected disabled hidden>Jenis Kelamin</option>
+																<option value="0">Laki-laki</option>
+																<option value="1">Perempuan</option>
+															</select>
+														</td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Tanggal Lahir</label></td>
+														<td width="70%"><input class="form-control" type="date" name="birth" id="birth" onchange="count()" placeholder="Tanggal Lahir"></td>
+														<input type="hidden" name="age" id="age" value="">
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Anak Ke</label></td>
+														<td width="70%"><input class="form-control" type="number" name="position" placeholder="Anak Ke"></td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Jumlah Saudara</label></td>
+														<td width="70%"><input class="form-control" type="number" name="siblings" placeholder="Jumlah Saudara"></td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Pendidikan Ayah</label></td>
+														<td width="70%">
+															<select class="form-control" name="fatheredu">
+																<option value="" selected disabled hidden>Pendidikan Ayah</option>
+																<option value="0">SMP/Sederajat</option>
+																<option value="1">SMA/Sederajat</option>
+																<option value="2">Diploma</option>
+																<option value="3">Sarjana</option>
+															</select>
+														</td>
+													</div>
+												</tr>
+												<tr>
+													<div class="form-group">
+														<td width="30%"><label class="control-label">Pendidikan Ibu</label></td>
+														<td width="70%">
+															<select class="form-control" name="motheredu">
+																<option value="" selected disabled hidden>Pendidikan Ibu</option>
+																<option value="0">SMP/Sederajat</option>
+																<option value="1">SMA/Sederajat</option>
+																<option value="2">Diploma</option>
+																<option value="3">Sarjana</option>
+															</select>
+														</td>
+													</div>
+												</tr>
+											</table>
+										</div>
+										<input type="submit" name="input" value="Kirim" class="btn btn-success" style="margin: 0 0 0 31%;">
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-5 col-lg-7">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah</h5>
+								</div>
+								<div class="card-body">
+									{% if name is defined %}
+									<div class="table-responsive">
+										<table class="table table-sm table-borderless">
+											<tr>
+												<td width="45%">Nama</td>
+												<td width="5%">:</td>
+												<td width="50%">{{ name }}</td>
+											</tr>
+											<tr>
+												<td>Kelas</td>
+												<td>:</td>
+												{% if preschool == 0 %}
+												<td>TK-A</td>
+												{% else %}
+												<td>TK-B</td>
+												{% endif %}
+											</tr>
+											<tr>
+												<td>Jenis Kelamin</td>
+												<td>:</td>
+												{% if gender == 0 %}
+												<td>Laki-laki</td>
+												{% else %}
+												<td>Perempuan</td>
+												{% endif %}
+											</tr>
+											<tr>
+												<td>Umur</td>
+												<td>:</td>
+												<td>{{ age }} Tahun</td>
+											</tr>
+											<tr>
+												<td>Anak Ke</td>
+												<td>:</td>
+												<td>{{ position }}</td>
+											</tr>
+											<tr>
+												<td>Saudara</td>
+												<td>:</td>
+												<td>{{ siblings }}</td>
+											</tr>
+											<tr>
+												<td>Pendidikan Ayah</td>
+												<td>:</td>
+												{% if fatheredu == 0 %}
+												<td>SMP/Sederajat</td>
+												{% elif fatheredu == 1 %}
+												<td>SMA/Sederajat</td>
+												{% elif fatheredu == 2 %}
+												<td>Diploma</td>
+												{% else%}
+												<td>Sarjana</td>
+												{% endif %}
+											</tr>
+											<tr>
+												<td>Pendidikan Ibu</td>
+												<td>:</td>
+												{% if motheredu == 0 %}
+												<td>SMP/Sederajat</td>
+												{% elif motheredu == 1 %}
+												<td>SMA/Sederajat</td>
+												{% elif motheredu == 2 %}
+												<td>Diploma</td>
+												{% else%}
+												<td>Sarjana</td>
+												{% endif %}
+											</tr>
+										</table>
+									</div>
+									{% else %}
+									<p><center>No data submited</center></p>
+									{% endif %}
+									{% if readiness == "Disarankan" %}
+									<div class="card border-left-success h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Hasil Prediksi</div>
+													<div class="h5 mb-0 font-weight text-gray-800">{{ readiness }}</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% elif readiness == "Dipertimbangkan" %}
+									<div class="card border-left-warning h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hasil Prediksi</div>
+													<div class="h5 mb-0 font-weight text-gray-800">{{ readiness }}</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% elif readiness == "Tidak Disarankan" %}
+									<div class="card border-left-danger h-100 py-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2">
+													<div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Hasil Prediksi</div>
+													<div class="h5 mb-0 font-weight text-gray-800">{{ readiness }}</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% else %}
+									{% endif %}
+								</div>
+							</div>
+							<div class="text-center">
+								<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ url_for('static',filename='img/undraw_true_friends_c94g.svg') }}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; School Readiness Prediction System 2021</span>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+	<script type="text/javascript">
+		function count(){
+			var birthdate = document.getElementById('birth').value;
+			var birthday  = +new Date(birthdate);
+			var result = document.getElementById('age');
+			result.value = ~~ ((Date.now() - birthday) / (31557600000));
+		}
+	</script>
+	<script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/sb-admin-2.min.js') }}"></script>
+</body>
+</html>
