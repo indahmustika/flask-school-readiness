@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request 
 
 app   = Flask(__name__)
 model = load_model("nadam.h5")
