@@ -1,5 +1,4 @@
-import keras
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from flask import Flask, render_template, request
 
 app   = Flask(__name__)
