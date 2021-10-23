@@ -113,17 +113,17 @@
 							</div>
 						</div>
 						<div class="col-xl-5 col-lg-7">
-							<div class="card shadow mb-4">
+							<div class="card shadow mb-4" id="printableArea">
 								{% if name is defined %}
 								<div class="card-header py-3">
-									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah <input type="button" class="btn btn-primary" onclick="printDiv('printableArea')" value="Cetak"></h5>
+									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah <input type="button" class="btn btn-secondary btn-sm" onclick="printDiv('printableArea')" value="Cetak" style="margin: 0 0 0 25%;"></h5>
 								</div>
 								{% else %}
 								<div class="card-header py-3">
 									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah</h5>
 								</div>
 								{% endif %}
-								<div class="card-body" id="printableArea">
+								<div class="card-body">
 									{% if name is defined %}
 									<div class="table-responsive">
 										<table class="table table-sm table-borderless">
