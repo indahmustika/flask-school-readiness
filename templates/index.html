@@ -31,14 +31,14 @@
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Nama</label></td>
-														<td width="70%"><input class="form-control" type="text" name="name" placeholder="Nama" autocomplete="off"></td>
+														<td width="70%"><input class="form-control" type="text" name="name" placeholder="Nama" autocomplete="off" required></td>
 													</div>
 												</tr>
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Kelas</label></td>
 														<td width="70%">
-															<select class="form-control" name="preschool">
+															<select class="form-control" name="preschool" required>
 																<option value="" selected disabled hidden>Kelas</option>
 																<option value="0">TK-A</option>
 																<option value="1">TK-B</option>
@@ -50,7 +50,7 @@
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Jenis Kelamin</label></td>
 														<td width="70%">
-															<select class="form-control" name="gender">
+															<select class="form-control" name="gender" required>
 																<option value="" selected disabled hidden>Jenis Kelamin</option>
 																<option value="0">Laki-laki</option>
 																<option value="1">Perempuan</option>
@@ -61,27 +61,27 @@
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Tanggal Lahir</label></td>
-														<td width="70%"><input class="form-control" type="date" name="birth" id="birth" onchange="count()" placeholder="Tanggal Lahir"></td>
+														<td width="70%"><input class="form-control" type="date" name="birth" id="birth" onchange="count()" placeholder="Tanggal Lahir" required></td>
 														<input type="hidden" name="age" id="age" value="">
 													</div>
 												</tr>
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Anak Ke</label></td>
-														<td width="70%"><input class="form-control" type="number" name="position" placeholder="Anak Ke"></td>
+														<td width="70%"><input class="form-control" type="number" name="position" placeholder="Anak Ke" required></td>
 													</div>
 												</tr>
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Jumlah Saudara</label></td>
-														<td width="70%"><input class="form-control" type="number" name="siblings" placeholder="Jumlah Saudara"></td>
+														<td width="70%"><input class="form-control" type="number" name="siblings" placeholder="Jumlah Saudara" required></td>
 													</div>
 												</tr>
 												<tr>
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Pendidikan Ayah</label></td>
 														<td width="70%">
-															<select class="form-control" name="fatheredu">
+															<select class="form-control" name="fatheredu" required>
 																<option value="" selected disabled hidden>Pendidikan Ayah</option>
 																<option value="0">SMP/Sederajat</option>
 																<option value="1">SMA/Sederajat</option>
@@ -95,7 +95,7 @@
 													<div class="form-group">
 														<td width="30%"><label class="control-label">Pendidikan Ibu</label></td>
 														<td width="70%">
-															<select class="form-control" name="motheredu">
+															<select class="form-control" name="motheredu" required>
 																<option value="" selected disabled hidden>Pendidikan Ibu</option>
 																<option value="0">SMP/Sederajat</option>
 																<option value="1">SMA/Sederajat</option>
@@ -189,6 +189,9 @@
 									</div>
 									{% else %}
 									<p><center>No data submited</center></p>
+									<div class="text-center">
+										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ url_for('static',filename='img/undraw_true_friends_c94g.svg') }}">
+									</div>
 									{% endif %}
 									{% if readiness == "Disarankan" %}
 									<div class="card border-left-success h-100 py-2">
@@ -226,9 +229,6 @@
 									{% else %}
 									{% endif %}
 								</div>
-							</div>
-							<div class="text-center">
-								<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ url_for('static',filename='img/undraw_true_friends_c94g.svg') }}">
 							</div>
 						</div>
 					</div>
