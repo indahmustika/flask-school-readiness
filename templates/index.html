@@ -189,9 +189,6 @@
 									</div>
 									{% else %}
 									<p><center>No data submited</center></p>
-									<div class="text-center">
-										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ url_for('static',filename='img/undraw_true_friends_c94g.svg') }}">
-									</div>
 									{% endif %}
 									{% if readiness == "Disarankan" %}
 									<div class="card border-left-success h-100 py-2">
@@ -230,6 +227,13 @@
 									{% endif %}
 								</div>
 							</div>
+							{% if name is defined %}
+							<div class="text-center"></div>
+							{% else %}
+							<div class="text-center">
+								<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{ url_for('static',filename='img/undraw_true_friends_c94g.svg') }}">
+							</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
