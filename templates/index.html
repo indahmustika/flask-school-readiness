@@ -114,10 +114,16 @@
 						</div>
 						<div class="col-xl-5 col-lg-7">
 							<div class="card shadow mb-4">
+								{% if name is defined %}
+								<div class="card-header py-3">
+									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah <input type="button" class="btn btn-primary" onclick="printDiv('printableArea')" value="Cetak"></h5>
+								</div>
+								{% else %}
 								<div class="card-header py-3">
 									<h5 class="m-0 text-primary">Prediksi Kesiapan Sekolah</h5>
 								</div>
-								<div class="card-body">
+								{% endif %}
+								<div class="card-body" id="printableArea">
 									{% if name is defined %}
 									<div class="table-responsive">
 										<table class="table table-sm table-borderless">
@@ -256,6 +262,13 @@
 			var result = document.getElementById('age');
 			result.value = ~~ ((Date.now() - birthday) / (31557600000));
 		}
+		function printDiv(divName) {
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+			document.body.innerHTML = printContents;
+			window.print();
+			document.body.innerHTML = originalContents;
+}
 	</script>
 	<script type="text/javascript" src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
